@@ -1,0 +1,7 @@
+3 2
+luca mario
+luca pietro
+francesca pietro
+luca INVIATI
+pietro RICEVUTI
+

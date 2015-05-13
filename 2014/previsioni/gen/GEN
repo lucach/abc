@@ -1,0 +1,46 @@
+# Argomenti per generare da input1.txt a input19.txt.
+# input0.txt e` il primo input di esempio del testo.
+# NOTA: per prevenire soluzioni poco ortodosse (stampare
+#       sempre "S" o sempre "P"), i testcase sono raggruppati
+#       nel formato "GroupMin - Subtask" dove ogni subtask ne contiene
+#       uno con risposta giusta "S" e uno con "P").
+
+#ST: 10
+0
+1
+
+#ST: 10
+2
+3
+
+#ST: 10
+4
+5
+
+#ST: 10
+6
+7
+
+#ST: 10
+8
+9
+
+#ST: 10
+10
+11
+
+#ST: 10
+12
+13
+
+#ST: 10
+14
+15
+
+#ST: 10
+16
+17
+
+#ST: 10
+18
+19
