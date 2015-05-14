@@ -22,7 +22,6 @@ int main(int argc, char* argv[])
     ifstream in;
     (argc == 1) ? in.open("input.txt") : in.open(argv[1]);
     in >> N;
-    cout << N << endl;
     assert(N <= 100);
     for (int i = 0; i < N; i++)
     {
