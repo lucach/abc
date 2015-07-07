@@ -173,13 +173,6 @@ int main(int argc, char *argv[])
         ex(oss.str().c_str(), 0.3f);
         return 0;
     }
-    if(costo != expectedcosto)
-    {
-        oss << "SI/NO corretto, ma costo totale errato: previsto " << expectedcosto <<
-            ", ricevuto " << costo << endl;
-        ex(oss.str().c_str(), 0.3f);
-        return 0;
-    }
     ex("L'output è corretto", 1.0f);
     return 0;
 }
