@@ -1,0 +1,88 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom,symbol]{footmisc}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\createsection{\Input}{Dati di input}
+\createsection{\Output}{Dati di output}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Negli ultimi anni in Italia sono stati costruiti diversi tratti di ferrovie ad alta velocità: ad esempio Milano - Roma è ora percorribile in meno di tre ore grazie a questo nuovo tipo di ferrovia, che deve essere realizzata appositamente seguendo particolari criteri.
+
+Durante i lunghi viaggi in treno per andare in università, Luca si è appassionato alla materia osservando dal finestrino la realizzazione della nuova ferrovia ad alta velocità Milano - Brescia che sarà completata entro dicembre 2016. Ha notato che sono stati completati sinora $N$ lotti (a singolo binario), ciascuno lungo esattamente dalla progressiva chilometrica $L_i$ a quella $L_f$.
+
+Essendo la ferrovia a più binari, alcune tratte sono riportate più volte: ciò significa che lì sono stati già completati più binari (che hanno chiaramente uguale progressiva chilometrica).
+Il capolinea, Milano, si considera a progressiva chilometrica 0.
+
+Com'è noto, in Italia le opere pubbliche nascondono spesso malaffare: per questo il presidente dell'autorità nazionale anticorruzione ha deciso che effettuerà un sopralluogo a campione, su uno dei tratti già realizzati, per controllare che tutto sia in regola.
+
+Il presidente ha scelto di fare un sopralluogo al $K$-esimo chilometro di binario che è stato posato a partire dal capolinea iniziale. Aiuta i tecnici della ferrovia a capire a quale progressiva chilometrica si trova tale $K$-esimo chilometro.
+
+\begin{warning}
+    Attenzione: $K$ supera, in alcuni casi, $2^{32}$. Se si lavora, ad esempio, in C/C++ è quindi richiesto l'uso del tipo \texttt{long long} al posto di \texttt{int}.
+\end{warning}
+
+\Input
+Il file \inputfile{} è composto da $N + 1$ righe. La prima riga contiene due interi $N$ e $K$, rispettivamente il numero di lotti già realizzati e il chilometro di binario posato su cui deve compiersi l'ispezione.
+
+Le seguenti $N$ righe contengono ciascuna due interi, la progressiva chilometrica a cui ha inizio il lotto, $L_i$, e quella in cui ha fine, $L_f$.
+
+\Output
+Il file \outputfile{} contiene un singolo intero: la progressiva chilometrica a cui si trova il $K$-esimo chilometro di binario che è stato posato, partendo dal capolinea.
+
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $1 \le N \le 1\,000$.
+\item La massima progressiva chilometrica è $2^{31}$.
+\item Per ogni lotto vale $L_i \le L_f$, ad indicare che è stata completata la realizzazione di un binario dalla progressiva chilometrica $L_i$ a $L_f$ (estremi inclusi).
+\item Il valore $K$ è un intero positivo che corrisponde a un chilometro di binario posato. In altre parole, $K$ non supera mai il totale complessivo di chilometri di binari posati.
+\end{itemize}
+
+\pagebreak
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [25 punti]}: La massima progressiva chilometrica è $1\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [15 punti]}: La massima progressiva chilometrica è $40\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 4} [15 punti]}: La massima progressiva chilometrica è $120\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 5} [35 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{altavelocita.input0.txt}{altavelocita.output0.txt}%
+\exmpfile{altavelocita.input1.txt}{altavelocita.output1.txt}%
+\end{example}
+
+\Explanation
+
+Il \textbf{primo caso di esempio} è rappresentato dal seguente schema. C'è quindi un unico binario e il quarto chilometro posato si trova alla progressiva chilometrica 5.
+\begin{figure}[H]
+\centering\includegraphics{altavelocita_asy/fig1.pdf}
+\end{figure}
+
+Il \textbf{secondo caso di esempio} è rappresentato dal seguente schema:
+\begin{figure}[H]
+\centering\includegraphics{altavelocita_asy/fig2.pdf}
+\end{figure}
+Ci sono più binari: partendo da Milano (progressiva 0) incontriamo un chilometro di binari alla progressiva 1, due chilometri alla progressiva 2, tre chilometri alla progressiva 3. Il settimo chilometro di binario posato si trova quindi alla progressiva chilometrica 4.

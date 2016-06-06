@@ -1,0 +1,21 @@
+real INTERVAL_CIRCLE_OUTER_RADIUS = .15;
+real INTERVAL_CIRCLE_INNER_RADIUS = .12;
+
+void draw_interval(int id, int start, int end) {
+        ++end;
+	draw((start, -id) -- (end, -id), linewidth(2));
+	fill(circle((start, -id), INTERVAL_CIRCLE_OUTER_RADIUS), black);
+	fill(circle((start, -id), INTERVAL_CIRCLE_INNER_RADIUS), white);
+	fill(circle((end, -id), INTERVAL_CIRCLE_OUTER_RADIUS), black);
+	fill(circle((end, -id), INTERVAL_CIRCLE_INNER_RADIUS), white);
+	
+}
+
+void setup_grid(int n_ids, int n_ticks) {
+	draw((0, 0) -- (n_ticks + .7, 0));
+	for (int i = 0; i <= n_ticks; ++i) {
+		draw((i, -.1) -- (i, +.1));
+		label(scale(.8) * ("$" + (string)i + "$"), (i + .5, .4), gray(.1));
+		draw((i, -.2) -- (i, -n_ids - .5), gray + dotted);
+	}
+}

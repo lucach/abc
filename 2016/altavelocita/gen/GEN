@@ -1,0 +1,41 @@
+# N, MAXK, seed
+
+# Subtask 1: Esempi
+#ST:10
+#COPY: testo/altavelocita.input0.txt
+#COPY: testo/altavelocita.input1.txt
+
+# Subtask 2: MAXK <= 1000
+#ST:25
+1	19	2
+2       20      3
+10      50      4
+100	200	6
+250	500	7
+500	1000	8
+1000	1000	9
+
+# Subtask 3: MAXK <= 40000
+#ST:15
+500	5000	10
+500	10000	11
+750	20000	12
+1000	30000	13
+1000	40000	14
+
+# Subtask 4: MAXK <= 120000
+#ST:15
+1000	70000	15
+1000	100000	16
+1000	110000	17
+1000	120000	18
+
+# Subtask 4: no limits
+#ST:35
+1	-1      19
+10	-1      20
+50	-1      21
+100	-1 	22
+500	-1	23
+750	-1	24
+1000	-1      25

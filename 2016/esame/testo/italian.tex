@@ -1,0 +1,66 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom,symbol]{footmisc}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\createsection{\Input}{Dati di input}
+\createsection{\Output}{Dati di output}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Anche quest'anno è giunta l'ora degli esami di maturità e il presidente della commissione della classe di Tommaso ha già stabilito regole severe per lo svolgimento della prova orale, alla presenza dei vari docenti.
+
+Il presidente ha deciso che la disposizione dei tavoli, dietro a cui siederanno i docenti, sarà a forma di cerchio (con il candidato al centro). Ha comunicato inoltre che intende adottare la seguente prassi:
+
+\begin{itemize}
+\item Ciascun docente ha diritto a porre un'unica domanda, caratterizzata da una certa difficoltà $D$.
+\item Un docente non può porre la sua domanda se uno dei suoi due vicini è già intervenuto per la sua domanda. Chiaramente, nella disposizione a cerchio consideriamo vicini le due persone sedute (alla propria destra e alla propria sinistra).
+\end{itemize}
+
+Sapendo che la difficoltà complessiva di un esame è data dalla somma delle difficoltà delle domande poste, qual è la \emph{massima} difficoltà ottenibile rispettando quanto chiesto dal presidente?
+
+\Input
+Il file \inputfile{} è composto da $2$ righe. La prima riga contiene un intero $N$, il numero dei docenti. La seconda riga contiene $N$ interi, ciascuno rappresentante la difficoltà della domanda dell'$i$-esimo docente.
+
+\Output
+Il file \outputfile{} contiene un singolo intero: la massima difficoltà ottenibile per un esame, rispettando le richieste del presidente.
+
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $2 \le N \le 1\,000$.
+\item $1 \le D_i \le 100$ per ogni $i=0 \ldots N-1$.
+\item Essendo la disposizione a cerchio, il docente numero $0$ si considera seduto a fianco del docente $N-1$ (e viceversa).
+\end{itemize}
+
+\pagebreak
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [50 punti]}: $N \le 20$.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [40 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{esame.input0.txt}{esame.output0.txt}%
+\exmpfile{esame.input1.txt}{esame.output1.txt}%
+\end{example}
+
+\Explanation
+
+Nel \textbf{primo caso di esempio} la massima difficoltà è ottenuta dalle domande dei docenti 0, 2 e 4 (per un totale di $8 + 4 + 6 = 18$). Si osservi che $8 + 5 + 9 = 22$ porta a un totale più alto ma non è una risposta lecita, perché le domande di difficoltà 8 e 9 arrivano da due docenti seduti vicini.
+
+Nel \textbf{secondo caso di esempio} ci sono diverse combinazioni di domande che danno luogo alla massima difficoltà ma non c'è un modo di sceglierle, rispettando le regole, la cui somma superi 2.

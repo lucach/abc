@@ -1,0 +1,13 @@
+name: "abc2016"
+description: "ABC 2016"
+tasks:
+    - "verifiche"
+    - "altavelocita"
+    - "edifici"
+    - "esame"
+token_mode: infinite
+date: 28 maggio 2016
+location: https://abc.chiodini.org
+start: 1464438600 
+stop: 1464449400
+logo: "logo.png"

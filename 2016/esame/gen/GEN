@@ -1,0 +1,27 @@
+# N	seed
+
+# Subtask 1: Esempi
+#ST:10
+#COPY: testo/esame.input0.txt
+#COPY: testo/esame.input1.txt
+
+# Subtask 2: N <= 20
+#ST:50
+3	2
+5	3
+10	4
+15	5
+19	6
+20	7 
+
+# Subtask 3: no limits
+#ST:40
+25	8
+50	9
+75	10
+100	11
+255	12
+500	13
+750	14
+999	15
+1000	16

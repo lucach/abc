@@ -1,0 +1,4 @@
+MINN = 2
+MAXN = 1000
+MINV = 1
+MAXV = 100

@@ -1,0 +1,60 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom,symbol]{footmisc}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\createsection{\Input}{Dati di input}
+\createsection{\Output}{Dati di output}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Il professor Tarboto sta pensando come gestire le verifiche nel prossimo anno scolastico. Dopo un'accurata riflessione, ha deciso che opererà nel modo seguente: organizzerà $N$ verifiche lungo l'anno e in ciascuna di queste chiederà esattamente $K$ argomenti.
+
+I suoi furbi studenti sono venuti in possesso della pianificazione e conoscono esattamente in quali giorni il professore ha pianificato le verifiche. Tali giorni sono numerati a partire da 0, che equivale al primo giorno di scuola.
+
+Sfortunatamente, la memoria degli studenti è limitata e il loro carico di lavoro deve essere umano: questo significa che in un giorno uno studente può studiare un solo argomento, che conoscerà quindi a partire dal giorno seguente. Inoltre si ricorderà tale argomento, indipendentemente da quale sia, per $T$ giorni. Ad esempio: se uno studente studia un argomento il giorno 2, lo conoscerà dal giorno 3 al giorno $2 + T$ (incluso).
+
+Gli studenti possono studiare anche prima dell'inizio dell'anno scolastico, se necessario, con le stesse modalità esposte sopra.
+
+Per ottimizzare la pianificazione aiuta gli studenti a capire qual è il numero minimo di giorni in cui devono studiare, affinché in occasione di \emph{tutte} le verifiche lungo l'anno sappiano \emph{almeno} $K$ argomenti!
+
+
+\Input
+Il file \inputfile{} è composto da $2$ righe. La prima riga contiene tre interi $N$, $T$, $K$ separati da spazio. Essi sono rispettivamente: il numero di verifiche, il numero di giorni per cui uno studente memorizza un argomento e il numero di argomenti richiesti ad ogni verifica.
+La seconda riga contiene $N$ interi, i giorni (a partire da 0) in cui saranno svolte le verifiche.
+
+\Output
+Il file \outputfile{} contiene un singolo intero: il numero minimo di giorni in cui uno studente deve studiare per arrivare preparato alle verifiche. Se non è possibile rispettare le condizioni del problema, stampare -1.
+
+\pagebreak
+
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $1 \le N, T, K \le 1\,000$.
+\item Un anno scolastico ha al più $2\,000$ giorni, quindi i giorni di svolgimento delle verifiche sono compresi tra 0 e $1\,999$.
+\item I giorni di svolgimento delle verifiche sono forniti in ordine cronologico.
+\end{itemize}
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [40 punti]}: $N = 1$, ovvero c'è solo una verifica in tutto l'anno.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [50 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{verifiche.input0.txt}{verifiche.output0.txt}%
+\exmpfile{verifiche.input1.txt}{verifiche.output1.txt}%
+\end{example}

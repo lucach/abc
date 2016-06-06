@@ -1,0 +1,77 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom,symbol]{footmisc}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\createsection{\Input}{Dati di input}
+\createsection{\Output}{Dati di output}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Luca ha iniziato a studiare in università. La struttura del grande campus universitario è particolarmente complessa. Esso è infatti costituito da $N$ edifici dove vengono svolte diverse attività. In particolare $K$ di questi $N$ edifici contengono aule di didattica e aule studio, mentre i rimanenti $N-K$ contengono alloggi per gli studenti.
+
+Gli edifici sono tra loro connessi grazie a $M$ strade. Ciascuna ha una lunghezza, espressa in metri, e collega due edifici. Tutte le strade possono essere percorse in entrambi i sensi.
+
+Dopo qualche mese in cui Luca si è spostato dalla sua città natale all'università in treno, ha deciso che è giunto il momento di affittare un alloggio in uno degli edifici dell'università. In tal modo sarà più vicino all'università e potrà alzarsi più tardi la mattina.
+
+Lungo una giornata tipica, Luca va a trovare i suoi amici che sono dislocati a gruppetti in tutti i $K$ edifici che contengono aule studio. La mattina Luca esce, fa il giro degli edifici in cui ci sono i suoi amici e al termine fa rientro nella sua stanza.
+
+In quale edificio (adibito ad alloggi) conviene a Luca affittare una stanza per minimizzare la distanza percorsa ogni giorno, sapendo che può andare a visitare gli amici nell'ordine che vuole?
+
+\Input
+Il file \inputfile{} è composto da $2+M$ righe. La prima riga contiene tre interi $N$, $M$, $K$ separati da spazio. Essi sono rispettivamente: il numero di edifici, il numero di strade e il numero di edifici contenenti aule studio.
+La seconda riga contiene $K$ interi, i numeri identificativi degli edifici contenenti aule studio.
+Seguono $M$ righe che descrivono le strade: ognuna contiene tre numeri $A$, $B$, $L$ ad indicare che esiste una strada tra gli edifici $A$ e $B$ di lunghezza $L$.
+
+\Output
+Il file \outputfile{} contiene un singolo intero: la distanza minima che Luca deve percorrere in un giorno, facendo la miglior scelta per l'affitto della stanza.
+
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $2 \le N \le 5\,000$.
+\item $1 \le M \le 100\,000$.
+\item $1 \le K \le 6$.
+\item $K < N$.
+\item Una stessa strada viene indicata al massimo una volta nel file di input.
+\item Presi due edifici qualunque, esiste sempre almeno un percorso che li collega.
+\item $1 \le A_i, B_i \le N$ per ogni $i=0 \ldots N-1$.
+\item $1 \le L_i \le 1\,000$ per ogni $i=0 \ldots N-1$.
+\item Il percorso giornaliero può passare anche più di una volta lungo una stessa strada.
+\end{itemize}
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [5 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [30 punti]}: $K = 1$, ovvero Luca parte dalla sua stanza per raggiungere l'unico gruppo di amici e torna subito indietro.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [15 punti]}: $K = 2$.
+\item \textbf{\makebox[2cm][l]{Subtask 4} [30 punti]}: $N \le 500$.
+\item \textbf{\makebox[2cm][l]{Subtask 5} [20 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{edifici.input0.txt}{edifici.output0.txt}%
+\exmpfile{edifici.input1.txt}{edifici.output1.txt}%
+\end{example}
+
+\Explanation
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=2in]{edifici_asy/example.pdf}
+\end{figure}
+
+
+Nel \textbf{secondo caso di esempio}, rappresentato in figura, una scelta ottimale è affittare una stanza nell'edificio 1. A quel punto il percorso giornaliero di Luca consiste nel partire dall'edificio 1, percorrere una strada di lunghezza 2 per arrivare all'edificio 3, quindi una strada di lunghezza 3 per arrivare all'edificio 5, infine una strada di lunghezza 4 per tornare al proprio alloggio.

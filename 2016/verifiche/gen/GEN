@@ -1,0 +1,28 @@
+# N	T	R	S
+
+# Subtask 1: Esempi
+#ST:10
+#COPY: testo/verifiche.input0.txt
+#COPY: testo/verifiche.input1.txt
+
+# Subtask 2: N = 1
+#ST:40
+1	2	5	2
+1	5	5	3
+1	20	10	5
+1	100	50	6
+1	500	100	7
+1	100	500	8
+1	1000	10	9
+1	999	1000	10
+
+# Subtask 3: no limits
+#ST:50
+10	10	5	11
+50	100	80	12
+100	1	100	13
+200	1000	500	14
+500	1000	500	15
+1000	1000	10	16
+1000	999	1000	17	
+

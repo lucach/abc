@@ -1,0 +1,7 @@
+name: altavelocita 
+title: Ferrovia ad alta velocità
+time_limit: 1.0
+token_mode: infinite
+memory_limit: 256
+public_testcases: all
+score_mode: max
