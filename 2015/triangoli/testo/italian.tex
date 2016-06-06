@@ -1,0 +1,85 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+\usepackage{hyperref}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+    Luca sta ripassando matematica in vista dell'esame di maturità con un suo compagno di classe, Matteo. Dopo un po' di tempo però, presi dalla noia, cominciano a scarabocchiare qualche numero e qualche figura geometrica a caso e si inventano al momento un gioco interessante.
+
+    Il gioco è stato così deciso dai due amici: Matteo scarabocchia $N$ numeri sul foglio e Luca deve cercare di sceglierne tre in modo che \textbf{NON} possano rappresentare le lunghezze dei tre lati di un triangolo valido. Se Luca riesce a trovare anche solo una combinazione ha vinto, altrimenti ha vinto Matteo.
+
+    \begin{warning}
+        Tre numeri sono lunghezze valide per i lati di un triangolo se ciascuno è minore o uguale alla somma degli altri due.
+    \end{warning}
+    \begin{warning}
+        In questa situazione viene considerato triangolo anche un cosiddetto ``triangolo degenere'' (ovvero quando un lato misura quanto la somma degli altri due).
+    \end{warning}
+
+    Sapresti contare quante possibili combinazioni Luca potrebbe trovare?
+
+
+\InputFile
+Il file \inputfile{} è composto da due righe. La prima riga contiene l'intero $N$. La seconda riga contiene $N$ interi separati da uno spazio, i numeri $V_i$ che Matteo ha scritto sul foglio.
+
+\OutputFile
+Il file \outputfile{} è composto da un'unica riga contenente un unico intero, la risposta a questo problema.
+
+% Assunzioni
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $3 \le N \le 15\,000$.
+	\item $1 \le V_i \le 10\,000\,000$ per ogni $i=0\ldots N-1$.
+\end{itemize}
+
+\pagebreak
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [30 punti]}: $N \leq 1\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [40 punti]}: $N \leq 5\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [20 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% Esempi
+\Examples
+\begin{example}
+\exmp{
+3
+1 2 3
+}{%
+0
+}%
+\end{example}
+\begin{example}
+\exmp{
+4
+3 4 10 6
+}{%
+2
+}%
+\end{example}
+
+\Explanation
+Nel \textbf{secondo caso di esempio}, le combinazioni con cui NON si ottiene un triangolo sono:
+\begin{itemize}[nolistsep, itemsep=1mm]
+    \item 3 - 4 - 10
+    \item 3 - 6 - 10
+

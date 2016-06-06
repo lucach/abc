@@ -1,0 +1,82 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+\usepackage{hyperref}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+    Luca sta ripassando matematica in vista dell'esame di maturità e in particolare sta studiando il teorema di Lagrange relativo alle funzioni continue e derivabili. Incuriosito dal lavoro del matematico italiano è andato a cercare quali altri teoremi gli vengono attribuiti e ne ha trovato uno interessante.
+
+    Il teorema in questione è detto ``Teorema dei quattro quadrati'' e afferma che ogni intero positivo può essere espresso come somma di (al più) quattro quadrati perfetti. Formalmente:
+    \begin{equation*}
+        n = a^2 + b^2 + c^2 + d^2 \ \ \ \forall {n} \in \mathbb{N}
+    \end{equation*}
+    dove $a$, $b$, $c$, $d$ sono interi non negativi.
+
+    Luca però non riesce a trovare un modo per sapere \italic{in quanti} modi diversi $n$ può essere ottenuto seguendo quanto afferma il teorema. Aiuta Luca!
+
+
+\InputFile
+Il file \inputfile{} è composto da due righe. La prima riga contiene l'intero $N$. La seconda riga contiene $N$ interi separati da uno spazio, i numeri $V_i$ su cui applicare il teorema.
+
+\OutputFile
+Il file \outputfile{} è composto da un'unica riga contenente $N$ interi: l'$i$-esimo numero indica \italic{in quanti} modi diversi si può ottenere $V_i$ seguendo il teorema.
+
+% Assunzioni
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $1 \le N \le 200$.
+	\item $1 \le V_i \le 2^{15}$ per ogni $i=0\ldots N-1$.
+\end{itemize}
+
+\pagebreak
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [40 punti]}: $N \leq 30$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [50 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% Esempi
+\Examples
+\begin{example}
+\exmp{
+1
+25
+}{%
+3
+}%
+\end{example}
+\begin{example}
+\exmp{
+2
+10 31
+}{%
+2 2
+}%
+\end{example}
+
+\Explanation
+Nel \textbf{primo caso di esempio}, 25 si può ottenere con le tre seguenti combinazioni:
+\begin{itemize}[nolistsep, itemsep=1mm]
+    \item $25 = 1^2 + 2^2 + 2^2 + 4^2$
+    \item $25 = 3^2 + 4^2 ( + 0^2 + 0^2)$
+    \item $25 = 5^2 ( + 0^2 + 0^2 + 0^2)$
+

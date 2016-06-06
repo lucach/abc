@@ -1,0 +1,9 @@
+name: interrogazioni 
+title: Interrogazioni ordinate
+score_mode: max
+token_mode: infinite
+time_limit: 1.0
+memory_limit: 256
+infile: input.txt
+outfile: output.txt
+primary_language: it

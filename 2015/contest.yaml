@@ -1,0 +1,12 @@
+name: "abc2015"
+description: "ABC 2015"
+tasks:
+    - "triangoli"
+    - "qquadrati"
+    - "latenza"
+    - "interrogazioni"
+token_mode: infinite
+date: 23 maggio 2015
+location: https://abc.chiodini.org
+start: 1432384200
+stop: 1432395000

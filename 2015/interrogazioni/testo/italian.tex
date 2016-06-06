@@ -1,0 +1,85 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+\usepackage{hyperref}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+    La commissione istituita per l'esame di maturità della classe di Luca ha ricevuto dal MIUR l'elenco dei codici SIDI di tutti gli $N$ alunni da esaminare, con il suggerimento che l'ordine delle interrogazioni all'esame orale segua, in ordine crescente, il codice SIDI. Ciò significa che uno studente $i$ dovrebbe essere interrogato prima di uno studente $j$ se il codice SIDI del primo è inferiore a quello del secondo (ovvero $C_i < C_j$).
+
+    Seguire le indicazioni del Ministero comporterebbe però una certa confusione tra gli studenti, abituati a essere interrogati in ordine per numero crescente di registro (numero 1, numero 2, \ldots, numero $N$).
+
+    Assecondando le richieste degli studenti, la commissione stabilisce di adottare la modalità consueta (in ordine per numero crescente di registro), ma vuole prima stabilire qual è l'impatto di questa scelta. In particolare si vuole stabilire per quante coppie di studenti $(i, j)$ cambierebbe l'ordine di interrogazione, ovvero per quante coppie $(i, j)$ $i$ verrebbe interrogato prima di $j$ con uno dei due metodi ma dopo $j$ con l'altro.
+
+\InputFile
+Il file \inputfile{} è composto da 2 righe. La prima riga contiene l'intero $N$, il numero di studenti.
+La seconda riga contiene $N$ interi positivi separati da spazio: i codici SIDI degli alunni dal numero 1 al numero N.
+
+\OutputFile
+Il file \outputfile{} contiene un singolo intero: il \textbf{numero di coppie} di studenti che cambiano l'ordine relativo di interrogazione tra il primo e il secondo metodo.
+
+\begin{warning}
+    Attenzione: la risposta al problema supera, in alcuni casi, $2^{32}$. Se si lavora, ad esempio, in C/C++ è quindi richiesto l'uso del tipo \texttt{long long} al posto di \texttt{int}.
+\end{warning}
+
+
+% Assunzioni
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+    \item $2 \le N \le 200\,000$.
+    \item $1 \le C_i \le 10\,000\,000$ per ogni $i=0\ldots N-1$.
+    \item Il codice SIDI è univoco: $C_i \ne C_j$ per ogni $(i, j)$ con $i \ne j$.
+\end{itemize}
+
+\pagebreak
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [40 punti]}: $N \leq 1\,000$
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [25 punti]}: Gli $N$ studenti hanno un codice SIDI compreso tra $1$ e $N$ (ovvero $1 \le C_i \le N$ per ogni $i=0\ldots N-1$).
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [25 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% Esempi
+\Examples
+\begin{example}
+\exmp{
+4
+14 63 22 31
+}{%
+2
+}%
+\end{example}
+\begin{example}
+\exmp{
+5
+84 31 57 25 66
+}{%
+6
+}%
+\end{example}
+
+\Explanation
+Nel primo esempio considera le seguenti coppie di studenti il cui ordine cambia tra i due metodi:
+\begin{itemize}
+    \item Codici SIDI 63 e 22 (63 > 22), sono rispettivamente i numeri 2 e 3 nel registro (2 < 3).
+    \item Codici SIDI 63 e 31 (63 > 31), sono rispettivamente i numeri 2 e 4 nel registro (2 < 4).
+\end{itemize}
+Tutte le altre coppie mantengono la stessa posizione relativa: gli studenti della coppia verranno interrogati nello stesso ordine indipendentemente dal metodo utilizzato.

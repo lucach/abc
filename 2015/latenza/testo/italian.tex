@@ -1,0 +1,94 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+\usepackage{hyperref}
+
+\makeatletter
+\gdef\this@inputfilename{input.txt}
+\gdef\this@outputfilename{output.txt}
+\makeatother
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+    La classe di Luca sta escogitando un modo per comunicare di nascosto durante le prove scritte dell'esame di maturità. I rigorosi commissari esterni hanno spento la rete Wi-Fi dell'istituto e controllano attentamente che nessuno parli. La commissione ha però commesso un grave errore: non ha ritirato gli smartphone.
+
+    Per riuscire comunque a scambiarsi informazioni segretamente, la classe ha intenzione di sfruttare la comunicazione via Bluetooth tra un telefono e l'altro. Come è ben noto, la comunicazione via Bluetooth richiede che i due dispositivi vengano prima accoppiati. Poiché il tempo prima dell'inizio della prova scritta è limitato ma si vuole che ciascuno studente sia connesso al resto della classe, la classe esegue il \emph{numero minimo} di accoppiamenti tra telefoni sufficienti affinché \emph{nessuno} resti escluso.
+
+    Ovviamente nella classe ci sono diversi smartphone, funzionanti a velocità differenti. Questo comporta che i collegamenti via Bluetooth (per loro natura \emph{bidirezionali}) abbiano velocità e latenze diverse. La latenza è il tempo che il segnale impiega per passare dal cellulare $i$ al cellulare $j$.
+
+    Come è naturale che sia, se due smartphone $i$ e $j$ non sono direttamente accoppiati (ma c'è tra loro $k$) definiamo la latenza totale come la somma delle latenze. Quindi $L(i, j) = L(i, k) + L(k, j)$.
+
+    Luca però intravede un possibile problema: due smartphone potrebbero essere molto distanti e quindi potrebbero esserci significativi ritardi nella comunicazione. Ciò comprometterebbe irrimediabilmente il buon esito della prova d'esame. Aiuta Luca a calcolare \emph{la massima latenza} (in millisecondi) tra due smartphone.
+
+\InputFile
+Il file \inputfile{} è composto da $N$ righe. La prima riga contiene l'intero $N$, il numero di smartphone.
+Le successive $N - 1$ righe descrivono ciascuna l'$i$-esimo accoppiamento. In particolare ciascuna riga contiene tre interi separati da spazio che indicano l'esistenza di una connessione tra $A_i$ e $B_i$ con una latenza $L_i$ (in millisecondi).
+
+\OutputFile
+Il file \outputfile{} contiene un singolo intero: la \emph{massima latenza} (in millisecondi) tra due smartphone.
+
+% Assunzioni
+\Constraints
+\begin{itemize}[nolistsep, itemsep=2mm]
+    \item $2 \le N \le 100\,000$.
+    \item $1 \le A_i, B_i \le N$ per ogni $i=0\ldots N-1$.
+    \item $1 \le L_i \le 1\,000$ per ogni $i=0\ldots N-1$.
+\end{itemize}
+
+\pagebreak
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [10 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [15 punti]}: Gli smartphone sono collegati in sequenza, come nella figura seguente (che rappresenta il secondo il caso di esempio)
+    \begin{figure}[H]
+        \centering\includegraphics{latenza_extra/linea.pdf}
+    \end{figure}
+
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [30 punti]}: $N \leq 200$.
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [25 punti]}: $N \leq 2\,500$.
+  \item \textbf{\makebox[2cm][l]{Subtask 5} [20 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% Esempi
+\Examples
+\begin{example}
+\exmp{
+4
+2 3 2
+4 2 2
+2 1 1
+}{%
+4
+}%
+\end{example}
+\begin{example}
+\exmp{
+5
+2 3 4
+4 1 3
+3 5 5
+1 2 3
+}{%
+15
+}%
+\end{example}
+
+\Explanation
+L'immagine rappresenta il primo caso di esempio.
+\begin{figure}[H]
+  \centering
+    \centering\includegraphics[width=.30\textwidth]{latenza_extra/esempio.pdf}
+\end{figure}
+La massima latenza si ha tra gli smartphone 1 e 3 e vale 4 millisecondi (il percorso è evidenziato in blu). Tutte le altre coppie sono separate da una latenza inferiore.
