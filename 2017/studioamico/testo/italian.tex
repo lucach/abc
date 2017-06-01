@@ -1,0 +1,127 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+
+
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+        Presso l'ITIS Paleocapa, da qualche anno, si svolge il progetto ``Studio amico'' in cui uno studente più grande (ovvero frequentante una classe superiore) mette a disposizione gratuitamente il proprio tempo per aiutare uno studente più piccolo con qualche lacuna.
+
+        Quest'anno il Dirigente Scolastico ha incaricato il professor Nevabe, che insegna in una classe seconda e in una classe quinta, di organizzare tale attività per la disciplina di sua competenza: informatica.
+
+        Il professor Nevabe ha quindi individuato un sottoinsieme di $N$ studenti di classe quinta da appaiare ad altrettanti $N$ studenti frequentanti la classe seconda. L'esperienza insegna che tale aiuto sarà efficace solo se lo studente più grande ha un voto in informatica \emph{strettamente maggiore} dello studente più piccolo.
+
+        Preso dai tanti impegni che si avvicendano nella seconda parte dell'anno scolastico, il professor Nevabe non ha tempo di controllare se può effettivamente associare ad ogni studente del secondo anno uno studente del quinto anno adatto. Aiutalo tu! 
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Implementation
+
+
+Dovrai sottoporre esattamente un file con estensione \texttt{.c} o \texttt{.cpp}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{studioamico.c}, \texttt{studioamico.cpp}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+	\funcitem{associabili}{
+            C/C++  & \verb|bool associabili(int N, int voti2[], voti5[]);|\\
+	}
+	
+	\begin{itemize}[nolistsep]
+	  \item L'intero $N$ rappresenta il numero di studenti di ciascuna classe.
+	  \item Gli array \texttt{voti2} e \texttt{voti5}, indicizzati da $0$ a $N-1$, contengono rispettivamente i voti degli studenti della classe seconda e i voti degli studneti della classe quinta.
+      \item La funzione dovrà restituire \texttt{true} se è possibile trovare un modo di abbinare ogni studente di seconda a uno studente di quinta con un voto strettamente maggiore, \texttt{false} altrimenti.
+
+      \end{itemize}
+\end{itemize}
+
+\medskip
+
+Il grader chiamerà la funzione \texttt{associabili} e ne stamperà il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama le funzioni che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $3$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: l'unico intero $N$.
+\item Riga $2$: gli $N$ voti degli studenti di seconda.
+\item Riga $3$: gli $N$ voti degli studenti di quinta.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: il valore restituito dalla funzione \texttt{associabili}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $1 \le N \le 10\,000\,000$.
+        \item I voti degli studenti sono espressi come interi tra $1$ e $10$: $1 \le \text{\texttt{voti2[$i$]}, \texttt{voti5[$i$]}} \le 10$ per ogni $i=0,\ldots, N-1$.
+	\item L'associazione è rigorosamente uno-a-uno: ad uno studente di seconda viene associato uno e un solo studente di quinta (e viceversa).
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Scoring
+
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [30 punti]}: $N \le 10$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [30 punti]}: $N \le 100\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [40 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Examples
+
+\begin{example}
+\exmpfile{studioamico.input0.txt}{studioamico.output0.txt}%
+\exmpfile{studioamico.input1.txt}{studioamico.output1.txt}%
+\end{example}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Explanation
+
+Nel \textbf{primo caso di esempio} uno dei possibili abbinamenti realizzabili consiste nell'assegnare al primo studente di seconda (con voto 4) il secondo studente di quinta (con voto 6), al secondo studente di seconda (voto 6) il primo studente di quinta (voto 7) e infine al terzo studente di seconda (voto 5) il terzo studente di seconda (voto 9).
+
+Nel \textbf{secondo caso di esempio} non esiste alcun modo di associare gli studenti in modo che a ogni studente di seconda venga assegnato uno studente di quinta con un voto strettamente maggiore del proprio.

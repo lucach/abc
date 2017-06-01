@@ -1,0 +1,143 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+
+
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+    Gli studenti di un istituto dalle infrastrutture obsolete sono alle prese con un alto tasso di pacchetti corrotti nella rete scolastica (tutti hanno bisogno di scambiarsi file di vitale importanza, specialmente durante le verifiche!). Per provare a mitigare il problema, hanno ideato un algoritmo per garantire l'integrità dei segmenti TCP scambiati su tale rete.
+
+	Ogni segmento, come è noto, viene suddiviso in $P$ pacchetti. L'algoritmo prevede di accodare a ciascun pacchetto un numero intero (tra $1$ e $M$) chiamato \emph{checksum}. Per ogni pacchetto, l'algoritmo sceglie un valore di checksum in modo che tale numero sia coprimo rispetto a tutti i checksum finora assegnati. Lato ricevente per verificare l'integrità del segmento è necessario controllare che tutti i $P$ valori di checksum ricevuti rispettino la regola sopra esposta.
+
+        \begin{warning}
+            Due interi si dicono \emph{coprimi} o \emph{relativamente primi} se il loro massimo comune divisore è $1$.
+        \end{warning}
+
+        Aiuta gli studenti implementando l'algoritmo di controllo lato ricevente! Per ogni pacchetto, rispondi $0$ se il checksum rispetta la regola prevista. Altrimenti rispondi con i checksum di un pacchetto \emph{valido} precedente che viola la regola (e quindi indica la corruzione del pacchetto!).
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Implementation
+
+
+Dovrai sottoporre esattamente un file con estensione \texttt{.c} o \texttt{.cpp}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{checksum.c}, \texttt{checksum.cpp}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare le seguenti funzioni:
+
+\begin{itemize}[nolistsep]
+	\funcitem{inizializza}{
+            C/C++  & \verb|void inizializza(int P, int M);|\\
+	}
+	\funcitem{controlla}{
+            C/C++  & \verb|int controlla(int C);|\\
+	}
+	
+	\begin{itemize}[nolistsep]
+	  \item L'intero $P$ rappresenta il numero di pacchetti in cui è stato suddiviso il segmento.
+	  \item L'intero $M$ rappresenta il massimo valore che può assumere il checksum.
+          \item L'intero $C$ rappresenta il checksum di un pacchetto, lato ricevente.
+          \item La funzione dovrà restituire $0$, se il checksum è valido, oppure il checksum di un altro pacchetto valido precedente che lo rende invalido.
+        \end{itemize}
+\end{itemize}
+
+\medskip
+
+Il grader chiamerà una sola volta la funzione \texttt{inizializza}, quindi chiamerà $P$ volte la funzione \texttt{controlla} stampandone il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama le funzioni che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $2$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: gli interi $P$ e $M$, separati da uno spazio.
+\item Riga $2$: $P$ interi \texttt{C[$i$]} per $i = 0,\ldots, P-1$.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: i valori calcolati dalla funzione \texttt{controlla}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $1 \le P \le 300\,000$.
+        \item $P \le M \le 4\,000\,000$.
+	\item $1 \le \text{\texttt{C[$i$]}} \le M$ per ogni $i=0,\ldots, P-1$.
+        \item Quando il checksum viene corrotto, esso potrebbe non essere più coprimo con diversi altri checksum. È sufficiente indicarne uno qualsiasi.
+        \item I valori di checksum sono tutti diversi.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Scoring
+
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [35 punti]}: $P \le 2\,000$ e $M \le 10\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [20 punti]}: $P \le 10\,000$ e $M \le 80\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [25 punti]}: $M \le 500\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 5} [20 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Examples
+
+\begin{example}
+\exmpfile{checksum.input0.txt}{checksum.output0.txt}%
+\exmpfile{checksum.input1.txt}{checksum.output1.txt}%
+\end{example}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Explanation
+
+Nel \textbf{primo caso di esempio}:
+\begin{itemize}
+    \item Il checksum del primo pacchetto, 10, è valido.
+    \item Il checksum del secondo pacchetto, 7, è valido.
+    \item Il checksum del terzo pacchetto, 4, non è valido perché 4 non è coprimo con 10.
+    \item Il checksum del quarto pacchetto, 9, è valido.
+    \item Il checksum del quinto pacchetto, 5, non è valido perché 5 non è coprimo con 10.
+    \item Il checksum del sesto pacchetto, 6, non è valido perché 6 non è coprimo né con 10 né con 9. È ammesso produrre una qualsiasi delle soluzioni.
+\end{itemize}
+

@@ -1,0 +1,12 @@
+name: "abc2017"
+description: "ABC 2017"
+tasks:
+    - "checksum"
+    - "paper"
+    - "studioamico"
+token_mode: infinite
+date: 27 maggio 2017
+location: https://abc.chiodini.org
+start: 1495888200 
+stop: 1495899000 
+logo: "logo.png"

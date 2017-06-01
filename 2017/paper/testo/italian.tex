@@ -1,0 +1,135 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+
+
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+        Il mondo degli articoli scientifici, chiamati in gergo \emph{paper}, si basa sul concetto di \emph{citazione}. Infatti, quando si scrive un paper è fondamentale citare altri paper che contengono informazioni correlate o dai quali si è tratto parte del lavoro. Questo è evidentemente necessario allo scopo di fornire spunti di lettura e approfondimento potenzialmente interessanti per un lettore.
+
+        Luca si sta preparando a scrivere il suo primo paper. Facendo ricerche sull'argomento scelto ha trovato $N$ paper particolarmente interessanti, indicati con interi da $1$ a $N$, e ha catalogato con accuratezza tutte le $M$ citazioni presenti. Ciascuna di queste citazioni è descritta con una coppia di interi \texttt{A[$i$]} e \texttt{B[$i$]}, a indicare che il paper \texttt{A[$i$]} contiene una citazione al paper \texttt{B[$i$]}.
+
+        Luca vorrebbe inserire nel suo nuovo articolo una citazione a tutti i paper che ha già trovato, ma un suo professore gli ha consigliato che è bene tenere questa lista corta per non tediare i lettori. Il professore gli ha quindi suggerito di seguire questa regola di buon senso: scegliere un unico paper da citare nel suo articolo, in modo che ``a cascata'' (ovvero, seguendo mano a mano le varie citazioni) un lettore incuriosito possa andarsi a leggere \emph{tutti} gli altri paper.
+
+        Quanti paper può scegliere Luca come unica citazione da inserire nel suo articolo?
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Implementation
+
+
+Dovrai sottoporre esattamente un file con estensione \texttt{.c} o \texttt{.cpp}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{paper.c}, \texttt{paper.cpp}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+	\funcitem{paper}{
+            C/C++  & \verb|int paper(int N, int M, int A[], int B[]);|\\
+	}
+	
+	\begin{itemize}[nolistsep]
+	  \item L'intero $N$ rappresenta il numero di paper scientifici.
+	  \item L'intero $M$ rappresenta il numero totale delle citazioni.
+          \item Gli array \texttt{A} e \texttt{B}, indicizzati da $0$ a $M-1$, contengono alla posizione $i$ la seguente informazione: il paper \texttt{A[$i$]} cita il paper \texttt{B[$i$]}.
+          \item La funzione dovrà restituire il numero di paper da cui si può iniziare la lettura in modo che, seguendo le citazioni, si arrivi a leggerli tutti.
+
+      \end{itemize}
+\end{itemize}
+
+\medskip
+
+Il grader chiamerà la funzione \texttt{paper} e ne stamperà il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama le funzioni che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $M+1$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: gli interi $N$ e $M$, separati da uno spazio.
+\item Righe $2,\ldots, M+1$: i due interi \texttt{A[$i$]}, \texttt{B[$i$]} per $i = 0,\ldots, M-1$.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: il valore restituito dalla funzione \texttt{paper}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $1 \le N \le 75\,000$.
+        \item $1 \le M \le 500\,000$.
+	\item $1 \le \text{\texttt{A[$i$]}, \texttt{B[$i$]}} \le N$ per ogni $i=0,\ldots, M-1$.
+        \item È possibile che la risposta al problema sia 0 (come nel secondo caso di esempio).
+        \item Un paper non contiene mai una citazione a se stesso. \\ Formalmente: $\text{\texttt{A[$i$]}} \neq \text{\texttt{B[$i$]}}$ per ogni $i=0,\ldots, M-1$.
+        \item Poiché un paper può essere aggiornato dopo la pubblicazione, sono lecite situazioni in cui $p$ cita $q$ (anche indirettamente) e $q$ cita $p$ (anche indirettamente).
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Scoring
+
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [50 punti]}: $N \le 500$ e $M \le 4000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [50 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Examples
+
+\begin{example}
+\exmpfile{paper.input0.txt}{paper.output0.txt}%
+\exmpfile{paper.input1.txt}{paper.output1.txt}%
+\end{example}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Explanation
+
+Nel \textbf{primo caso di esempio} Luca può scegliere tra due paper (1 e 2) per la sua unica citazione. Infatti:
+\begin{itemize}
+    \item Iniziando a leggere il paper 1 si trova una citazione al paper 2 e da quest'ultimo una citazione al paper 3.
+    \item Iniziando a leggere il paper 2 si trovano le due citazioni ai paper 1 e 3.
+\end{itemize}
+
+Nel \textbf{secondo caso di esempio} Luca non ha modo di scegliere alcun paper tale che, seguendo le citazioni, si arrivi a leggere tutti i 3 paper.
+

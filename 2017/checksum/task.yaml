@@ -1,0 +1,7 @@
+name: checksum
+title: Pacchetti corrotti
+time_limit: 2.5
+token_mode: infinite
+memory_limit: 512
+public_testcases: all
+score_mode: max

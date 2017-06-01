@@ -1,0 +1,7 @@
+name: studioamico
+title: Studio amico
+time_limit: 0.5
+token_mode: infinite
+memory_limit: 256
+public_testcases: all
+score_mode: max
