@@ -1,0 +1,7 @@
+name: latenza2
+title: Massima latenza II
+time_limit: 3.0
+token_mode: infinite
+memory_limit: 256
+public_testcases: all
+score_mode: max

@@ -1,0 +1,117 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+%\usepackage{caption}
+\usepackage{amsthm}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{teo}{Teorema}
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                    \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+    Per rendere ancora più sicure le comunicazioni segrete tra gli smartphone durante l'esame di maturità, gli studenti stanno ponderando l'eventualità di \emph{cifrare} tutti i messaggi che si scambieranno. Nel corso dell'ultimo anno scolastico hanno infatti studiato l'algoritmo di cifratura asimmetrica RSA. L'idea è semplice: realizzare un'app che cifri i messaggi e un'altra che li decifri; in questo modo anche qualora i commissari dovessero intercettarli non riuscirebbero a leggerne il contenuto!
+
+      La maturità si avvicina e i lavori per l'app di decifratura sono ancora in alto mare. In estrema sintesi\footnote{Un'introduzione all'algoritmo completo, \emph{non necessaria per risolvere questo problema}, si trova per chi volesse saperne di più presso \url{https://it.wikipedia.org/wiki/RSA}.}, ti viene fornita una coppia di interi $N$ e $d$ che costituiscono la ``chiave privata''. Ogni intero $c$, che rappresenta un carattere cifrato, si decifra calcolando $$c^d \bmod N$$
+
+      \begin{warning}
+      L'operazione di modulo restituisce il resto della divisione intera tra due numeri. In C/C++, si calcola con l'operatore \texttt{\%}. Questa operazione gode, inoltre, delle seguenti proprietà (molto utili per evitare \emph{integer overflow} quando si vogliono calcolare numeri molto grandi):
+      \begin{itemize}[nolistsep]
+                  \item $(A + B) \bmod M = (A \bmod M + B \bmod M) \bmod M$
+                  \item $(A \cdot B) \bmod M = (A \bmod M \cdot B \bmod M) \bmod M$
+      \end{itemize}
+      \end{warning}
+    
+      Aiuta gli studenti a scrivere l'app per la decifratura di un intero messaggio lungo $L$ caratteri, ciascuno da decifrare singolarmente per produrre il testo in chiaro e mettere al sicuro il buon esito dell'esame!
+      
+\Implementation
+Dovrai sottoporre un unico file con estensione \texttt{.cpp} o \texttt{.c}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{rsa.cpp} e \texttt{rsa.c}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+    \funcitem{decifra}{
+        C/C++  & \verb|void decifra(int N, int d, int L, int messaggio[], char plaintext[]);|\\
+    }
+
+    \begin{itemize}[nolistsep]
+        \item Gli interi $N$ e $d$ costituiscono la chiave privata necessaria per decifrare il messaggio.
+        \item L'intero $L$ rappresenta la lunghezza del messaggio che è stato cifrato e trasmesso.
+        \item L'array \texttt{messaggio}, indicizzato da $0$ a $L-1$, contiene alla posizione $i$ l'intero $c$ che rappresenta l'$i$-esima lettera cifrata.
+        \item La funzione dovrà riempire l'array \texttt{plaintext} in modo che le posizioni da $0$ a $L-1$ contengano ciascuna il risultato della decifrazione del messaggio contenuto a quella rispettiva posizione nell'array \texttt{messaggio}. \\ La posizione $L$ dell'array \texttt{plaintext} dovrà contenere il carattere di fine stringa \texttt{`\textbackslash 0'}.
+
+    \end{itemize}
+\end{itemize}
+
+Il grader chiamerà la funzione \texttt{decifra} e stamperà l'array \texttt{plaintext} sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama la funzione che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $2$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: gli interi $N$, $d$ e $L$, separati da uno spazio.
+    \item Riga $2$: i numeri interi \texttt{messaggio[$i$]}, per $i = 0,\ldots, L-1$.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: il contenuto dell'array \texttt{plaintext}, così come modificato dalla funzione \texttt{decifra}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $128 \le N \le 2^{31} - 1$ (ovvero $N$ è rappresentabile con un intero, anche con segno, a 32 bit).
+\item $1 \le d < N$.
+\item $1 \le L \le 100$.
+\item $0 \le $ \texttt{messaggio[$i$]} $ < N$ per ogni $i=0\ldots L-1$.
+\item È garantito che una corretta decifratura del messaggio porta ad avere un plaintext costitutito da numeri interi, in base 10, rappresentanti caratteri ASCII validi (in particolare, lettere minuscole).
+\end{itemize}
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [25 punti]}: $L = 1$, \texttt{messaggio[$0$]} $\le 1\,000$, $d = 3$.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [25 punti]}: $N \le 1\,000\,000$, $L = 1$.
+\item \textbf{\makebox[2cm][l]{Subtask 4} [10 punti]}: $N \le 1\,000\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 5} [40 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{rsa.input0.txt}{rsa.output0.txt}%
+\exmpfile{rsa.input1.txt}{rsa.output1.txt}%
+\end{example}
+
+\Explanation
+
+Nel \textbf{primo caso di esempio} dobbiamo decifrare un messaggio composto da un unico carattere cifrato: l'intero 119. Calcoliamo quindi ${119}^3 = 1\,685\,159$ e prendiamo il resto della divsione per $N = 145$. Il risultato è l'intero 114, che nella codifica ASCII rappresenta la lettera \texttt{`r'}.
+
+Nel \textbf{secondo caso di esempio} procediamo in modo analogo, decifrando singolarmente ciascun intero.

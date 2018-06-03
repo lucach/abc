@@ -1,0 +1,126 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+\usepackage{xfrac}
+\hypersetup{colorlinks = true,linkcolor = black,urlcolor  = blue,citecolor = black,anchorcolor = black}
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                   \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+    Per finanziarsi l'agognata vacanza estiva che avrà luogo in una località segretissima, Luca ha deciso di seguire con attenzione il fiorente mercato del mining di criptovalute. Ha scoperto infatti che nei laboratori della sua università sono presenti parecchie GPU che ben si prestano al mining di criptovalute.
+      
+    Luca ha già ideato il suo piano nei dettagli: seguendo attentamente l'andamento del valore sul mercato di $N$ valute, ha calcolato per ciascuna quanti minuti di calcolo occorrono, utilizzando una GPU, per minarne un'unità. Al prezzo di cambio corrente, è certo che se riuscirà a minare un'unità di tutte queste criptovalute, guadagnerà abbastanza per potersi permettere la vacanza. Bisogna solo fare attenzione a rispettare un vincolo un po' particolare, dovuto alla frenesia con cui le nuove criptovalute vengono via via abilitate al mining: Luca le ha già messe in ordine per momento in cui avverrà l'ICO \footnote{\url{https://en.wikipedia.org/wiki/Initial_coin_offering}}. Prerequisito affinché sia possibile minare una certa valuta è possedere (oppure aver avviato il mining) almeno un'unità di tutte quelle aventi l'ICO in precedenza.
+
+      Da adesso alla data prescelta per il viaggio mancano $M$ minuti. Resta da compiere l'ultima missione cruciale: impossessarsi di alcuni computer in università per poterne utilizzare abusivamente le GPU. Naturalmente, meno GPU utilizzerà, meno è probabile che qualcuno scopra il suo piano e gli rovini l'estate. Aiuta Luca a non farsi scoprire: quante GPU dovrà utilizzare \emph{al minimo} per riuscire a minare un'unità di tutte le criptovalute prima del viaggio?
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Implementation
+
+
+Dovrai sottoporre esattamente un file con estensione \texttt{.c} o \texttt{.cpp}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{mining.c}, \texttt{mining.cpp}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+	\funcitem{gpu}{
+        C/C++  & \verb|int gpu(int N, int M, int T[]);|\\
+	}
+	
+	\begin{itemize}[nolistsep]
+	  \item L'intero $N$ rappresenta il numero di criptovalute che devono essere minate.
+	  \item L'intero $M$ rappresenta il numero di minuti che mancano al viaggio.
+      \item L'array \texttt{T}, indicizzato da $0$ a $N-1$, contiene il tempo in minuti necessario per minare un'unità dell'$i$-esima criptovaluta.
+      \item La funzione dovrà restituire il numero minimo di GPU necessarie per minare tutte le criptovalute prima del viaggio.
+    \end{itemize}
+\end{itemize}
+
+\medskip
+
+Il grader chiamerà la funzione \texttt{gpu} e ne stamperà il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama le funzioni che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $2$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item Riga $1$: gli interi $N$ e $M$, separati da uno spazio.
+\item Riga $2$: $N$ interi \texttt{T[$i$]} per $i = 0,\ldots, N-1$.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente il valore restituito dalla funzione \texttt{gpu}.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+	\item $1 \le N \le 100\,000$.
+    \item $1 \le M \le 1\,000\,000$.
+	\item $1 \le \text{\texttt{T[$i$]}} \le M$ per ogni $i=0,\ldots, N-1$.
+    \item Quando una GPU completa il mining di una certa criptovaluta, può subito iniziare a minarne un'altra al minuto successivo.
+    \item Prese le criptovalute in ordine, è consentito avviare il mining della $i$-esima solamente se tutte le precedenti (ovvero, tutte le $j$-esime con $j < i$) sono già state minate oppure sono in corso di mining.
+    \item Non è consentito dividere il lavoro di mining di una certa criptovaluta su più GPU.
+    \item Tutte le criptovalute devono essere minate entro il minuto $M$ (incluso).
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Scoring
+
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere correttamente tutti i test relativi ad esso.
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+  \item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+  \item \textbf{\makebox[2cm][l]{Subtask 2} [10 punti]}: \texttt{T[$0$]} $+ \ldots +$ \texttt{T[$N-1$]} $ \le M$.
+  \item \textbf{\makebox[2cm][l]{Subtask 3} [35 punti]}: $N \le 1\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 4} [30 punti]}: $N \le 5\,000$.
+  \item \textbf{\makebox[2cm][l]{Subtask 5} [25 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Examples
+
+\begin{example}
+\exmpfile{mining.input0.txt}{mining.output0.txt}%
+\exmpfile{mining.input1.txt}{mining.output1.txt}%
+\end{example}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Explanation
+
+Nel \textbf{primo caso di esempio}, possiamo far minare tutte le tre criptovalute ad un'unica GPU, che terminerà proprio al minuto 10, giusto in tempo per la vacanza.
+
+Nel \textbf{secondo caso di esempio}, occorrono due GPU. Una possibile distribuzione del lavoro è attribuire il mining della prima e della terza criptovaluta alla prima GPU (che può terminare al più presto al minuto 75), mentre la seconda GPU può minare la seconda e la quarta (finendo non prima del minuto 80).  

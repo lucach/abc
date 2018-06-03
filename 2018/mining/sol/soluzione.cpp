@@ -1,0 +1,1 @@
+binaria_veloce.cpp

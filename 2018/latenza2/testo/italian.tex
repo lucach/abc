@@ -1,0 +1,120 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+%\usepackage{caption}
+\usepackage{amsthm}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{teo}{Teorema}
+\createsection{\Grader}{Grader di prova}
+
+\newcommand{\inputfile}{\texttt{input.txt}}
+\newcommand{\outputfile}{\texttt{output.txt}}
+
+\newenvironment{warning}
+  {\par\begin{mdframed}[linewidth=2pt,linecolor=gray]%
+    \begin{list}{}{\leftmargin=1cm
+                    \labelwidth=\leftmargin}\item[\Large\ding{43}]}
+  {\end{list}\end{mdframed}\par}
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Dopo il precedente tentativo di copiare durante la maturità - rivelatosi un flop -, le nuove classi quinte dell'ITIS Paleocapa vogliono migliorare il sistema ideato da Luca tre anni fa per ridurre ulteriormente la latenza tra due smartphone.
+
+Ricapitoliamo brevemente la situazione: i commissari esterni hanno spento la rete Wi-Fi dell'istituto ma non hanno ritirato gli smartphone ai candidati. Quindi, per riuscire a scambiarsi informazioni segretamente, gli studenti vogliono sfruttare la comunicazione via Bluetooth tra i loro telefoni. Come è ben noto, il protocollo Bluetooth richiede che due dispositivi vengano prima accoppiati.
+
+Nel 2015 la classe di Luca aveva eseguito il numero minimo di accoppiamenti tra smartphone affinché nessuno restasse escluso. Poiché il sistema si è rivelato parecchio fragile (bastava infatti che uno smartphone si spengesse dopo aver esaurito la batteria per rendere inservibile tutta l'infrastruttura), quest'anno la nuova classe di maturandi ha eseguito qualche accoppiamento in più.
+
+Gli $N$ studenti della classe, ciascuno con il proprio smartphone, hanno preparato $M$ accoppiamenti Bluetooth. Una volta completata questa operazione, due telefoni accoppiati possono comunicare scambiandosi dati con una \emph{latenza} (ovvero, con un ritardo tra l'invio e la ricezione) pari a un certo numero di millisecondi, che dipende dalla velocità dei due telefoni.
+
+Qualora due smartphone non possano comunicare direttamente perché non accoppiati, la latenza tra essi è data dalla somma delle varie latenze lungo il ``percorso'' di smartphone accoppiati che è necessario attraversare. La comunicazione transita sempre per il percorso migliore, ovvero quello che minimizza la latenza complessiva. 
+
+La preoccupazione di Luca, che è stato contattato dagli attuali maturandi come consulente, è sempre la stessa: due smartphone potrebbero essere molto distanti e quindi potrebbero esserci significativi ritardi nella comunicazione. Aiutalo a valutare la situazione: quanto vale la \emph{massima latenza} in millisecondi tra due smartphone?
+
+\Implementation
+
+Dovrai sottoporre un unico file con estensione \texttt{.cpp} o \texttt{.c}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{latenza2.cpp} e \texttt{latenza2.c}) con un esempio di implementazione.
+\end{warning}
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+    \funcitem{latenza}{
+        C/C++  & \verb|int latenza(int M, int M, int A[], int B[], int L[]);|\\
+    }
+
+    \begin{itemize}[nolistsep]
+        \item L'intero $N$ rappresenta il numero di studenti.
+        \item L'intero $M$ rappresenta il numero di accoppiamenti Bluetooth effettuati.
+        \item Gli array \texttt{A}, \texttt{B} e \texttt{L}, indicizzati da $0$ a $M-1$, contengono alla posizione $i$ la seguente informazione: gli smartphone \texttt{A[$i$]} e \texttt{B[$i$]} sono accoppiati e la latenza tra loro vale \texttt{L[$i$]} millisecondi.
+        \item La funzione dovrà restituire la massima latenza in millisecondi tra due smartphone.
+
+    \end{itemize}
+\end{itemize}
+
+Il grader chiamerà la funzione \texttt{latenza} e ne stamperà il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama la funzione che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da $M+1$ righe, contenenti:
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: gli interi $N$ e $M$, separati da uno spazio.
+    \item Righe $2,\ldots, M+1$: i tre interi \texttt{A[$i$]}, \texttt{B[$i$]} e \texttt{L[$i$]} per $i = 0,\ldots, M-1$.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: il valore restituito dalla funzione \texttt{latenza}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $2 \le N \le 2\,000$.
+\item $N-1 \le M \le 100\,000$.
+\item $1 \le $ \texttt{A[$i$]}, \texttt{B[$i$]} $\le N$ per ogni $i=0\ldots M-1$.
+\item L'accoppiamento coinvolge sempre due smartphone diversi: \texttt{A[$i$]} $\neq$ \texttt{B[$i$]} per ogni $i=0\ldots M-1$.
+\item Ogni accoppiamento è riportato solo una volta ed è per sua natura bidirezionale.
+\item $1 \le $ \texttt{L[$i$]} $\le 1\,000$ per ogni $i=0\ldots M-1$.
+\end{itemize}
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [15 punti]}: $N \le 2\,000$ e gli accoppiamenti sono stati eseguiti in modo tale che gli smartphone sono connessi ``in linea'' come nello schema seguente:
+    \begin{figure}[H]
+                \centering\includegraphics{latenza2_asy/linea.pdf}
+    \end{figure}
+\item \textbf{\makebox[2cm][l]{Subtask 3} [55 punti]}: $N \le 500$ e $M \le 5\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 4} [15 punti]}: $N \le 1\,000$.
+\item \textbf{\makebox[2cm][l]{Subtask 5} [15 punti]}: $M \le 2\,000$.
+\end{itemize}
+
+\Examples
+\begin{example}
+\exmpfile{latenza2.input0.txt}{latenza2.output0.txt}%
+\exmpfile{latenza2.input1.txt}{latenza2.output1.txt}%
+\end{example}
+
+\Explanation
+
+Nel \textbf{primo caso di esempio}, la latenza massima si ha tra gli smartphone 1 e 3: 9 millisecondi.
+
+Nel \textbf{secondo caso di esempio}, la latenza massima si ha tra gli smarpthone 3 e 4: il miglior percorso per i pacchetti è transitare attraverso lo smartphone 2. Questo porta la latenza totale della trasmissione a 3 + 8 = 11 millisecondi.
