@@ -1,0 +1,114 @@
+\usepackage{xcolor}
+\usepackage{afterpage}
+\usepackage{pifont,mdframed}
+\usepackage[bottom]{footmisc}
+
+\makeatletter
+\gdef\this@inputfilename{input}
+\gdef\this@outputfilename{output}
+\makeatother
+
+\newcommand{\funcitem}[2]{\item[$\blacksquare$] \textbf{\large \textsf{Funzione} \texttt{#1}} \vspace{-0.3cm} \begin{center}\begin{tabularx}{\textwidth}{|c|X|} \hline #2 \hline \end{tabularx}\end{center}}
+
+Leonardo è universalmente riconosciuto come uno degli inventori più prolifici di tutti i tempi. Com'era possibile che non si dimenticasse le numerose idee che gli balenavano continuamente in testa? Probabilmente Leonardo aveva cura per ciascuna idea di appuntarsi qualche bozza su un foglietto, in modo che non appena fosse stato possibile sarebbe stato in grado di recuperare le idee e portare a termine il progetto.
+
+\begin{figure}[H]
+  \begin{center}
+        \includegraphics[width=0.5\linewidth]{progetti.jpg}
+        \caption{Si crede che Leonardo sia stato tra i primi a costruirsi e usare una penna stilografica.}
+  \end{center}
+\end{figure}
+
+Luca è strabiliato dall'impressionante numero di progetti e fatica a capacitarsi di come una singola persona abbia potuto lavorare a tutto ciò. È ragionevole supporre infatti che il massimo numero di progetti che si possono realizzare in un giorno sia un numero $K$ piccolo. Inoltre, non tutti i giorni sono uguali: a volte si riesce a completarne solo uno... a volte molti!
+
+Luca sta provando a stimare il numero di giorni necessari per completare $N$ progetti ma è in confusione perché si è accorto che il risultato varia estremamente a seconda della quantità di progetti completati in ciascun giorno. Facendo un passo indietro, vuole allora capire un'altra cosa: quante sono le possibili combinazioni diverse con cui può completare tutti i progetti, scegliendo arbitrariamente quanti progetti completare giorno per giorno e senza avere alcun limite massimo di giorni?
+
+\Implementation
+Dovrai sottoporre un unico file con estensione \texttt{.cpp} o \texttt{.c}.
+
+\begin{warning}
+Tra gli allegati a questo task troverai un template (\texttt{progetti.cpp} e \texttt{progetti.c}) con un esempio di implementazione.
+\end{warning}
+
+\pagebreak
+
+Dovrai implementare la seguente funzione:
+
+\begin{itemize}[nolistsep]
+    \funcitem{progetti}{
+        C/C++  & \verb|int progetti(int N, int K);|\\
+    }
+
+    \begin{itemize}[nolistsep]
+        \item L'intero $N$ rappresenta il numero dei progetti.
+        \item L'intero $K$ rappresenta il massimo numero di progetti completabili in un giorno.
+        \item La funzione dovrà restituire il numero di modi diversi con cui è possibile completare i progetti. Poiché tale numero può essere grande, è necessario restituire soltanto il resto della divisione (operatore di \emph{modulo}\footnote{In C/C++ l'operatore modulo ha simbolo \texttt{`\%'}.}) per $1\,000\,000\,007$.
+
+    \end{itemize}
+\end{itemize}
+
+Il grader chiamerà la funzione \texttt{progetti} e ne stamperà il valore restituito sul file di output.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+\Grader
+Allegata a questo problema è presente una versione semplificata del grader usato durante la correzione, che potete usare per testare le vostre soluzioni in locale. Il grader di esempio legge i dati da \texttt{stdin}, chiama la funzione che dovete implementare e scrive su \texttt{stdout}, secondo il seguente formato.
+
+Il file di input è composto da un'unica riga, contentente:
+
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: gli interi $N$ e $K$, separati da uno spazio.
+\end{itemize}
+
+Il file di output è composto da un'unica riga, contenente:
+\begin{itemize}[nolistsep,itemsep=2mm]
+    \item Riga $1$: il valore restituito dalla funzione \texttt{progetti}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\Constraints
+
+\begin{itemize}[nolistsep, itemsep=2mm]
+\item $2 \le N \le 10^9$.
+\item $2 \le K \le 5$.
+\item In ogni giorno Leonardo può completare da 1 a $K$ progetti.
+\item Rigorosmente, due modi di completamento si considerano \emph{diversi} se differiscono per il numero di giorni necessari al completamento di tutti i progetti oppure se, a parità di giorni, esiste almeno un giorno in cui nei due modi sono stati completati un numero diverso di progetti. 
+\end{itemize}
+
+\Scoring
+Il tuo programma verrà testato su diversi test case raggruppati in subtask.
+Per ottenere il punteggio relativo ad un subtask, è necessario risolvere
+correttamente tutti i test relativi ad esso.
+\begin{itemize}[nolistsep,itemsep=2mm]
+\item \textbf{\makebox[2cm][l]{Subtask 1} [\phantom{0}0 punti]}: Casi d'esempio.
+\item \textbf{\makebox[2cm][l]{Subtask 2} [15 punti]}: $K = 2$, $N \le 15$.
+\item \textbf{\makebox[2cm][l]{Subtask 3} [20 punti]}: $K = 2$, $N \le 10^6$.
+\item \textbf{\makebox[2cm][l]{Subtask 4} [15 punti]}: $K = 3$, $N \le 10^6$.
+\item \textbf{\makebox[2cm][l]{Subtask 5} [20 punti]}: $K = 2$, $N \le 10^9$.
+\item \textbf{\makebox[2cm][l]{Subtask 6} [30 punti]}: Nessuna limitazione specifica.
+\end{itemize}
+
+\pagebreak
+
+\Examples
+\begin{example}
+\exmpfile{progetti.input0.txt}{progetti.output0.txt}%
+\exmpfile{progetti.input1.txt}{progetti.output1.txt}%
+\end{example}
+
+\Explanation
+
+Nel \textbf{primo caso di esempio} ci sono due modi diversi per completare i due progetti rispettando il vincolo dei due progetti al giorno: è possibile completarne uno nel primo giorno e uno nel secondo oppure si può finire in un solo giorno completandoli subito entrambi.
+
+Nel \textbf{secondo caso di esempio} ci sono cinque modi diversi per completare i quattro progetti:
+\begin{itemize}[nolistsep, itemsep=2mm]
+    \item uno al giorno per quattro giorni;
+    \item due al giorno per due giorni;
+    \item uno il primo giorno, due il secondo giorno, uno il terzo giorno;
+    \item uno il primo giorno, uno il secondo giorno, due il terzo giorno;
+    \item due il primo giorno, uno il secondo giorno, uno il terzo giorno.
+\end{itemize}

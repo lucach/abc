@@ -1,0 +1,13 @@
+name: "abc2019"
+description: "ABC 2019"
+tasks:
+    - "progetti"
+    - "quadri"
+    - "ultimacena"
+token_mode: infinite
+date: 1 giugno 2019
+location: https://abc.chiodini.org
+start: 1559392200 
+stop: 1559403000
+timezone: "Europe/Rome"
+logo: "logo.png"

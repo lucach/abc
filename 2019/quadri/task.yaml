@@ -1,0 +1,16 @@
+# General info
+name: quadri 
+title: Lotteria di quadri 
+
+# Technical info
+memory_limit: 64
+time_limit: 0.3
+infile: ''
+outfile: ''
+
+# Other stuff
+score_mode: max_subtask
+token_mode: disabled
+public_testcases: all
+feedback_level: full
+
