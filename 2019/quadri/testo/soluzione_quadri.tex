@@ -1,0 +1,41 @@
+\begin{solution}
+    \renewcommand{\O}{\mathcal{O}}
+\createsection{\Naive}{{\small{$\blacksquare$}} \normalsize Soluzione naïve $\O(N^3)$}
+\createsection{\NN}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(N^2)$}
+\createsection{\NlogN}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(N \log N)$}
+\createsection{\Sol}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(N)$ }
+
+\Naive
+Si può cercare il valore massimo di $B$ semplicemente implementando quanto descritto nel testo del problema. Si prova con $B=1$, $B=2$ e così via, incrementando il valore ad ogni tentativo, fino a trovare il primo valore per cui esiste un sottoarray lungo $B$ la cui somma dei valori supera $M$. Per verificare ciò, fissato il valore di $B$ è necessario controllare tutti gli intervalli $[i, i+B)$ con $i=0\ldots N-1-B$ (ovvero tutte le possibili posizioni di partenza), calcolarne la somma e verificare che sia $\le M$. Non appena si trova un intervallo con somma maggiore di $M$, possiamo terminare gli incrementi di $B$ e affermare che la risposta è $B-1$.
+
+Questa soluzione ha complessità $\O(N^3)$ in quanto per ogni possibile valore di $B$ (al più $N$ incrementi, da 1 a $N$) e per ogni possibile posizione di partenza di un intervallo (che sono $N-B$, quindi $\sim N$) sommiamo $B$ valori.
+
+\NN
+Modificando l'approccio naïve è possibile ridurre il tempo impiegato per controllare se un valore di $B$ è adatto oppure no da $\O(N^2)$ a $\O(N)$.
+
+Nello specifico l'inefficienza è data dal ricalcolo completo della somma degli elementi di due intervalli aventi inizio rispettivamente nella posizione $i$ e nella posizione $i+1$. È facile accorgersi che questi due intervalli $[i, i+B)$ e $[i+1,i+1+B)$ differiscono solo per l'elemento in posizione $i$ (che c'è nel primo intervallo ma non nel secondo) e per quello in posizione $i+B$ (che c'è nel secondo intervallo ma non nel primo). Con questa semplice tecnica, che è nota come ``sliding window'', la somma del prossimo intervallo può essere calcolata in tempo costante una volta nota la somma dell'intervallo corrente, aggiungendo e togliendo i valori dei due elementi menzionati sopra.
+
+Questo accorgimento riduce il tempo complessivo da $\O(N) \cdot \O(N^2)$ a $\O(N) \cdot \O(N) = \O(N^2)$.
+
+\NlogN
+Ora che sappiamo come verificare in tempo lineare se un certo $B$ è ammissibile oppure no, possiamo pensare di diminuire il numero di valori da controllare.
+
+È possibile utilizzare la ricerca dicotomica in quanto sono verificate le seguenti due osservazioni, grazie al fatto che non vi sono valori negativi:
+\begin{itemize}[nolistsep, itemsep=2mm]
+    \item Se la somma dei valori in tutti gli intervalli lunghi $X$ non supera $M$, allora anche tutti gli intervalli più corti avranno somma non superiore a $M$.
+    \item Se la somma dei valori in almeno un intervallo lungo $X$ supera $M$, allora per tutte le lunghezze maggiori sicuramente esisterà almeno un intervallo di quella lunghezza la cui somma supera $M$.
+\end{itemize}
+Con la ricerca dicotomica vengono verificati, ciascuno in tempo lineare, al più $\log N$ valori per $B$, portando a una complessità finale di $\O(N \log N)$, che è sufficiente per ottenere il punteggio pieno.
+
+\Sol
+Per ottenere una soluzione lineare in $N$ dobbiamo cambiare il ragionamento precedente: anziché verificare se un certo valore di $B$ è ammissibile, è possibile per ogni posizione di partenza controllare quanto è lungo il sottoarray massimo con somma non superiore a $M$. Tra tutte queste lunghezze, la risposta al problema è il valore minimo (visto che, fissato $B$, \emph{tutti} gli intervalli devono rispettare la condizione).
+
+Quindi, più precisamente, per ogni posizione $i$ di inizio cerchiamo la posizione $j$ tale che la somma dell'intervallo $[i,j]$ non superi $M$ mentre la somma dell'intervallo $[i, j+1]$ superi $M$. In altre parole, stiamo dicendo che non è possibile spostare $j$ nemmeno di una posizione in avanti senza superare $M$. La lunghezza di questi intervalli è pari a $j-i+1$ e, come detto sopra, tra tutte queste lunghezze scegliamo la più corta.
+
+Si nota abbastanza facilmente che man mano che $i$ viene incrementato, $j$ non decresce mai (ricordiamo ancora che i valori sono tutti positivi); tali contatori verranno incrementati quindi entrambi al più $N$ volte, mantenendo così complessità totale $\O(N)$.
+
+\createsection{\Cppsol}{Esempio di codice \texttt{C++11}}
+\Cppsol
+\colorbox{white}{\makebox[.99\textwidth][l]{\includegraphics[scale=1]{code_quadri.pdf}}}
+
+\end{solution}

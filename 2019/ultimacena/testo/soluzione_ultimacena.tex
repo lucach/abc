@@ -1,0 +1,57 @@
+\begin{solution}
+    \renewcommand{\O}{\mathcal{O}}
+\createsection{\Esponenziale}{{\small{$\blacksquare$}} \normalsize Soluzione esponenziale}
+\createsection{\FPT}{{\small{$\blacksquare$}} \normalsize Vertex-cover è trattabile fissato il parametro (FPT)}
+\createsection{\Osservazione}{{\small{$\blacksquare$}} \normalsize Un'ulteriore osservazione}
+
+Questo problema è una versione mascherata del noto ``problema di copertura dei vertici'', forse più conosciuto con la dicitura inglese \emph{vertex-cover}.
+
+Possiamo sintetizzare il problema come segue: dato un grafo $G=(V,E)$ si vuole trovare un sottoinsieme dei suoi vertici $S \subseteq V$ tale che ogni arco abbia almeno un estremo in $S$. In altre parole, per ogni $(u,v) \in E$ almeno un vertice tra $u$ e $v$ deve essere incluso nell'insieme $S$, che è detto \emph{copertura}.
+
+Questo problema è \emph{NP-completo}, ovvero appartiene a una classe di problemi detta \emph{NP}, per i quali possiamo verificare se una soluzione è ammissibile in tempo polinomiale. Nel caso di vertex cover, quindi, dato un insieme di vertici è ``facile'' verificare se è davvero una copertura. Essendo inoltre anche un problema \emph{NP-hard}, si sospetta che per esso non esistano soluzioni polinomiali (a meno che \emph{P}$=$\emph{NP})\footnote{Ovviamente questa trattazione delle classi di complessità computazionale teoriche è solo una brevissima sintesi, ulteriori approfondimenti possono essere trovati facilmente nei libri classici di algoritmica oppure su Wikipedia}.
+
+\Esponenziale
+Abbiamo accennato che per i problemi \emph{NP} è ``facile'' verificare se la soluzione è corretta. Concentriamoci quindi ora sul nostro problema e descriviamo una semplice procedura che dato un insieme $S \subseteq V$, stabilisca se tale insieme è davvero una copertura valida per il grafo $G$. È sufficiente iterare su tutti gli elementi $s \in S$ e segnare come ``visitati'' tutti gli archi ad essi incidenti. Al termine, in tempo lineare nel numero dei vertici e degli archi, potremo affermare che $S$ è una copertura valida se e solo se tutti gli archi sono stati visitati.
+
+Non resta altro che provare ``a forza bruta'' tutte le possibili combinazioni con cui è possibile formare insiemi di al più dieci elementi partendo dagli $N$ vertici del grafo. Uno dei modi più facili per implementare questa soluzione è far ricorso a una funzione ricorsiva che, richiamata via via su tutti i vertici, provi per ognuno ad includerlo oppure escluderlo dall'insieme candidato. Quando tale insieme raggiunge cardinalità dieci, si verifica se costituisce o meno una copertura tramite la procedura lineare descritta sopra.
+
+Poiché le assunzioni garantiscono l'esistenza di tale copertura, esplorando tutte le possibilità siamo certi di trovarla, pagando purtroppo una complessità esponenziale.
+
+\FPT
+Con un po' di allenamento, ci si accorge che questo problema ha un'assunzione abbastanza singolare: qualunque sia la dimensione del grafo, esiste una copertura con al più dieci vertici. Questo da un lato può suggerire lo sviluppo di alcune euristiche greedy, sfruttando il fatto che i vertici nella copertura hanno probabilmente un alto numero di archi incidenti; dall'altro dovrebbe far riflettere sulla natura del problema.
+
+Ribadiamo il fatto che siamo certi esista una copertura come richiesto. Preso allora un qualsiasi arco $(a,b)$ sicuramente $a$ deve appartenere alla copertura oppure $b$ deve appartenervi. Non può essere che la copertura non contenga né $a$ né $b$, perché altrimenti l'arco $(a,b)$ non sarebbe coperto, contro la definizione di copertura. Possiamo quindi ``esplorare'' due possibili casi: la copertura contiene $a$ oppure la copertura contiene $b$.
+
+Proseguiamo allo stesso modo e consideriamo un arco $(b,c)$: se prima la scelta è ricaduta sull'includere $a$, ora possiamo includere $b$ oppure $c$ arrivando ad avere $\{a,b\}$ oppure $\{a,c\}$. Se invece prima avessimo scelto di includere $b$, ora l'arco $(b,c)$ sarebbe già coperto e non ci sarebbe bisogno di aggiungere nulla.
+
+Consideriamo ancora un altro arco: $(d,e)$. A prescindere dalle scelte fatte in precedenza, abbiamo di nuovo due possibilità per coprirlo: aggiungere $d$ oppure $e$ alla copertura. Visualizziamo tramite un albero la situazione descritta.
+
+	\begin{center}
+		\begin{tikzpicture}
+		\tikzset{level distance=40pt,sibling distance=20pt}
+		\tikzset{edge from parent/.append style={->}}
+                \Tree [.$\{\}$ [.$\{a\}$ [.$\{a,b\}$ [.$\{a,b,d\}$ ] [.$\{a,b,e\}$ ] ] [.$\{a,c\}$ [.$\{a,c,d\}$ ] [.$\{a,c,e\}$ ] ] ] [.$\{b\}$ [.$\{b,d\}$ ] [.$\{b,e\}$ ] ] ]
+		\end{tikzpicture}
+	\end{center}
+
+Si può proseguire analizzando tutti gli archi e aggiungendo mano a mano le due possibilità (dove servono) per completare la copertura. Questa tecnica è detta \emph{bounded search tree}: stiamo costruendo un albero di ricerca della copertura, ma esso è limitato dalla dimensione massima della copertura. La chiave per non far espandere all'infinito l'albero e rischiare di percorrere strade non convenienti è proprio data dal limite dei dieci vertici. Questo particolare albero infatti è limitato a profondità dieci; se una foglia a profondità dieci non contiene ancora un insieme che copre tutto il grafo, non ha senso proseguire.
+
+D'altra parte è relativamente facile convincersi che se una copertura esiste, con questo metodo sicuramente viene trovata entro profondità dieci perché stiamo analizzando tutti i possibili insiemi sensati (non aggiungendo inutilmente entrambi gli estermi di un arco) fino a dimensione dieci.
+
+Questa categoria di problemi è detta \emph{FPT} (Fixed-Parameter Tractable): il problema generale è intrattabile, ma se imponiamo limiti sul ``parametro'' possiamo trovare una soluzione lineare nella dimensione dell'input ed esponenziale solo nel parametro. Nello specifico, per questo problema il parametro è la dimensione della copertura e la complessità della soluzione è $\O((N+M) \cdot 2^{10})$. Ciò non cancella i ragionamenti iniziali sull'intrattabilità del problema nella sua formulazione generale: stiamo semplicemente sfruttando un'assunzione importante sulla dimensione della soluzione del problema. 
+
+\Osservazione
+Per raggiungere il punteggio pieno, è necessario adottare l'approccio con albero di ricerca limitato aggiungendo una piccola osservazione preliminare.
+
+Ricordiamo che il \emph{grado} di un vertice è dato dal numero di archi ad esso incidenti. Consideriamo un generico grafo in input e supponiamo di scoprire che alcuni suoi vertici hanno grado $\ge 11$. Cosa possiamo dire rispetto a tali vertici?
+
+L'osservazione è abbastanza facile. Supponiamo che $v \in V$ abbia grado 11. Se includiamo $v$ nella copertura, abbiamo ``sistemato'' 11 archi. Se non includiamo $v$ nella copertura, allora quegli archi non sono coperti e per \emph{tutti} dovremo includere l'altro estremo nella copertura. Avremmo quindi che, solo per coprire quegli undici archi, dovremmo includere 11 vertici nella copertura e già solo questo sfora le assunzioni imposte. 
+
+Abbiamo quindi dimostrato che ogni vertice con grado almeno pari a 11 dev'essere obbligatoriamente incluso nella copertura di dimensione massima 10. Possiamo quindi analizzare in anticipo il grafo, aggiungere nell'insieme candidato a essere copertura i vertici con grado superiore a 10, rimuovere gli archi ad essi incidenti (perché già ``sistemati'') e procedere infine come descritto nella sezione precedente.
+
+
+\createsection{\Cppsol}{Esempio di codice \texttt{C++11}}
+\Cppsol
+\colorbox{white}{\makebox[.99\textwidth][l]{\includegraphics[scale=.77]{code_ultimacena.pdf}}}
+
+\end{solution}

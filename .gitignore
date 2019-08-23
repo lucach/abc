@@ -16,3 +16,5 @@ __pycache__
 *DWARF*
 .DS_Store
 *.swp
+input/
+output/

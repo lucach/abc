@@ -1,0 +1,160 @@
+\begin{solution}
+    \renewcommand{\O}{\mathcal{O}}
+\createsection{\Naive}{{\small{$\blacksquare$}} \normalsize Soluzione esponenziale $\O(K^N)$}
+\createsection{\NK}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(NK)$ tramite programmazione dinamica}
+\createsection{\KKKlogN}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(K^3 \log N)$ tramite esponenziazione veloce di matrici}
+\createsection{\comb}{{\small{$\blacksquare$}} \normalsize Soluzione $\O(K^3\log N + K\log^2N)$ tramite calcolo combinatorio}
+
+Questo problema ammette (facili) soluzioni specifiche per alcuni subtask con $K=2$; nella trattazione che segue ci concentriamo invece sulla versione più generale con $K$ arbitrario.
+
+\Naive
+Questo problema si presta bene a una soluzione \emph{ricorsiva}. Definiamo una comoda funzione $f_k(n)$ che conta il numero di combinazioni possibili con cui è possibile completare $n$ progetti svolgendone \emph{al più} $k$ al giorno. Si ha che:
+\begin{itemize}
+    \item $f_k(1) = 1$ indipendentemente da $k$: infatti, a prescindere da quanti progetti possiamo completare in un giorno, vi è un unico modo per completare l'unico progetto rimasto;
+    \item $f_k(n) = 0$ per ogni $n \le 0$ indipendentemente da $k$: infatti, se non vi è alcun progetto da completare, non c'è alcun modo di fare ciò.
+\end{itemize}
+
+Se in un certo giorno Leonardo può completare al più $k$ progetti e ne ha $n$ da fare, può farne uno (gliene restano $n-1$), oppure può farne due (gliene restano $n-2$) e così via fino a completarne $k$ (il massimo consentito, gliene restano $n-k$). Questi sono tutti modi diversi per completare il lavoro a prescindere da cosa farà nei giorni successivi, pertanto vanno sommati. Possiamo esprimere in forma compatta il caso generale quindi come
+$$f_k(n) = \sum_{x=1}^{k} f_k(n-x)$$
+
+La risposta al problema è ovviamente $f_K(N)$. A questo punto è facile implementare la funzione ricorsiva descritta, che ha complessità esponenziale.
+
+\NK
+Ci si accorge presto che la soluzione esponenziale è inefficiente, in quanto calcola più volte la funzione $f$ con gli stessi parametri. Mantenendo invariata la definizione di $f_k(n)$, possiamo sfruttare la tecnica della programmazione dinamica per memorizzare il risultato della funzione a seconda dei parametri.
+
+Ci sono $N$ possibilità per l'argomento della funzione e il calcolo di ciascuna può richiedere sommare fino a $K$ addendi; questo pone un limite superiore pari a $\O(NK)$ alla complessità computazionale di questa soluzione. Poiché $N$ può essere molto grande ($N \le 10^9$), è necessario conservare in memoria solo le combinazioni $f_k(n)$ effettivamente richieste nei calcoli e non preallocare una grossa area di memoria, decisamente troppo grande per un computer!
+
+\KKKlogN
+Analizzando attentamente quanto viene richiesto, si nota che la risposta a questo problema è data dall'$n$-esimo elemento di una ricorrenza lineare.
+\begin{mdframed}[style=tight]
+	\begingroup
+	\setlength{\fboxsep}{0pt}%  
+	\colorbox{black!50!white}{\makebox[\linewidth]{\textcolor{white}{\parbox[c][.8cm][c]{\linewidth}{\centering\textsf{Prodotto tra matrici}}}}}
+	\endgroup
+	\hrule\vspace*{2mm}
+	\hspace{.03\linewidth}
+	\begin{minipage}{.94\linewidth}
+Il prodotto tra matrici bidimensionali richiede che esse siano \emph{conformabili}, ovvero che il numero di colonne della prima matrice corrisponda al numero di righe della seconda. In questa situazione, la matrice prodotto ha lo stesso numero di righe della prima e lo stesso numero di colonne della seconda.
+
+Detta $A^{x \times y}$ la prima matrice e $B^{y \times z}$ la seconda, la matrice prodotto avrà forma $C^{x \times z}$ e i suoi elementi saranno dati da:
+
+$$C[i][j]=\sum_{k=0}^{y-1}A[i][k] \cdot B[k][j]$$
+
+Come si può intuire dalla formula, calcolare il prodotto di tali matrici ha complessità $\O(x \cdot y \cdot z)$.
+	\end{minipage}
+\end{mdframed}
+
+Per comodità e semplicità ci limitiamo a spiegare l'approccio con $K=3$, ma il discorso si generalizza facilmente al variare di $K$.
+
+Posto $K=3$, la ricorrenza lineare $F$ è definita come: $$F_n=F_{n-1}+F_{n-2}+F_{n-3}$$
+
+Il calcolo dell'$(n+1)$-esimo elemento dati quelli precedenti può essere effettuato tramite prodotto di opportune matrici (tecnica chiamata \emph{matrix exponentiation}). Nello specifico, date
+
+$$A =\begin{pmatrix} 
+$F_n$ \\
+$F_{n-1}$ \\
+$F_{n-2}$
+\end{pmatrix}
+\qquad \qquad B=
+\begin{pmatrix} 
+$F_{n+1}$ \\
+$F_{n}$ \\
+$F_{n-1}$
+\end{pmatrix}$$
+vorremmo trovare una matrice $C$ tale che $C \cdot A=B$. Ragionando sulla definizione del prodotto tra matrici descritta sopra, si può calcolare che posto
+$$C = 
+\begin{pmatrix}
+1 & 1 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0 
+\end{pmatrix}
+$$
+l'espressione $C \cdot A = B$ risulta corretta. Abbiamo quindi un modo per calcolare l'$(n+1)$-esimo elemento della sequenza dati gli elementi nelle posizioni $n$, $n-1$ e $n-2$.
+
+La risposta al problema sarà quindi contenuta nella posizione $[0,0]$ della matrice $C$ elevata alla $(N-1)$-esima potenza (tale cella contiene il valore di $F_{n+1}$, quindi di $F_{N}$ nel caso specifico).
+
+Dobbiamo prestare attenzione però a \emph{come} calcoliamo la matrice $C^{N-1}$. Si potrebbe essere tentati di calcolare $C^2, C^3, \ldots, C^{N-1}$ ma così facendo sarebbero necessari $N-2$ prodotti tra matrici $K \times K$ e ciascuno di essi richiede $\O(K^3)$. Esiste un modo più furbo per ottenere lo stesso risultato che impiega una tecnica detta \emph{fast exponentiation}.
+
+Per calcolare $a^b$ (siano essi numeri reali o matrici) possiamo osservare che
+
+$$a^b = \begin{cases}
+(a^2)^{b/2} & \text{se } b \text{ è pari} \\
+a \cdot (a^2)^{(b-1)/2} & \text{se } b \text{ è dispari}
+\end{cases}$$
+
+Calcolare potenze in questo modo richiede solo $\O(\log b)$ passi, un miglioramento significativo rispetto all'algoritmo naïve lineare. Per dettagli in merito all'implementazione si può consultare la soluzione pubblicata sul progetto GitHub della gara\footnote{\url{https://github.com/lucach/abc}} oppure cercare informazioni in merito a \emph{exponentiation by squaring}, un altro nome con cui è nota questa tecnica. 
+
+Riassumendo, possiamo calcolare $C^{N-1}$ in $\O(K^3 \log N)$ ed ottenere il risultato finale nella cella $[0][0]$ della matrice trovata.
+
+
+\comb
+Presentiamo ora una soluzione alternativa efficiente, ma di cui non dimostreremo la complessità computazionale. Essa segue un'idea interessante e non implementata da nessun partecipante durante la gara, sfruttando la seguente analogia: l'obiettivo è tassellare un rettangolo $1 \times n$ utilizzando tasselli di dimensioni $1 \times 1, 1 \times 2, \ldots, 1 \times k$. Ciò premesso, il valore della funzione $f_k(n)$, definita come in precedenza, è dato dal numero di modi con cui riusciamo a tassellare il rettangolo $1 \times n$ utilizzando un numero arbitrario di tasselli $1 \times 1, 1 \times 2, \ldots, 1 \times k$. In questo parallelismo, le varie dimensioni dei tasselli rappresentano quindi il numero di progetti completati in un giorno.
+
+Per chiarezza, mostriamo questo approccio con un esempio dove $N=4$ e $K=2$; la soluzione è $f_2(4)=5$. Infatti, i 5 modi che abbiamo per tassellare il rettangolo $1 \times 4$ avendo a disposizione tasselli $1 \times 1$ e $1 \times 2$ sono:
+
+\begin{center}
+\includegraphics{asy_progetti/1111.pdf}
+\includegraphics{asy_progetti/211.pdf}
+\includegraphics{asy_progetti/121.pdf}
+\includegraphics{asy_progetti/112.pdf}
+\includegraphics{asy_progetti/22.pdf}
+
+Ogni tassello $1 \times x$ indica che in quel giorno Leonardo ha svolto $x$ progetti.
+
+Il ``tempo'' scorre da sinistra a destra (quindi l'ordine conta!)
+\end{center}
+
+Definiamo i casi base della funzione in modo identico a quanto fatto in precedenza ($f_k(1) = 1$ e $f_k(x) = 0$ per $x < 0$). Per questione di comodità che sarà chiara in seguito (1 è l'elemento neutro della moltiplicazione), poniamo anche $f_k(0) = 1$.
+
+Per ottenere il numero totale di combinazioni, iniziamo contando il numero di combinazioni che otteniamo unendo 2 rettangoli larghi la metà di quello finale, quindi $f_k(\floor{\sfrac{n}{2}}) \cdot f_k(\ceil{\sfrac{n}{2}})$.
+
+Nel caso di esempio queste combinazioni sono $f_k(2) \cdot f_k(2)=4$, ovvero:
+\begin{center}
+\includegraphics{asy_progetti/1111.pdf} \\
+\includegraphics{asy_progetti/211.pdf} \\
+\includegraphics{asy_progetti/112.pdf} \\
+\includegraphics{asy_progetti/22.pdf} \\
+\end{center}
+
+Come si nota bene nella rappresentazione grafica, tutte queste combinazioni richiedono che il secondo ed il terzo progetto siano eseguiti in giorni differenti (lo si nota dal fatto che non capita mai che un tassello sia ``a cavallo'' della metà del rettangolo, nell'esempio quindi tra il secondo e il terzo progetto).
+
+Dobbiamo quindi aggiungere alla quantità calcolata anche le combinazioni che prevedono che il secondo ed il terzo progetto siano svolti nello stesso giorno (graficamente è l'equivalente di provare ad inserire ogni possibile tassello di dimensione \emph{maggiore} di 1 e al più lungo $K$ in ogni possibile modo per il quale risulti che il secondo ed il terzo progetto siano svolti nello stesso giorno).
+
+In questo caso specifico l'unico modo è inserire un tassello $1 \times 2$ esattamente al centro del rettangolo $1 \times 4$; le combinazioni con cui tassellare i due rettangoli rimanenti (prima e dopo il tassello inserito al centro) possono essere calcolate nuovamente tramite la funzione $f_k$.
+
+Nel caso specifico, dopo aver inserito un tassello $1 \times 2$ al centro restano un progetto prima (copribile in $f_2(1) = 1$ modo) e un progetto dopo (copribile in $f_2(1) = 1$ modo). In conclusione avremo quindi $1 \cdot 1 = 1$ modo aggiuntivo per tassellare il rettangolo, portando il totale a $4 + 1 = 5$.
+
+\subsubsection*{Un secondo esempio leggermente più elaborato}
+
+Mostriamo ora il ragionamento su un esempio leggermente più grande per rendere ancora meglio l'idea con $N=4$ e $K=3$. Come abbiamo fatto in precedenza, consideriamo per iniziare le combinazioni ottenibili tassellando le due metà $1 \times 2$. Avremo $f_3(\floor{\sfrac{n}{2}}) \cdot f_3(\ceil{\sfrac{n}{2}}) = f_3(2) \cdot f_3(2) = 2 \cdot 2 = 4$. Le quattro combinazioni sono infatti identiche alle precedenti (sui rettangoli $1 \times 2$ infatti il tassello $1 \times 3$ è inutilizzabile):
+
+\begin{center}
+\includegraphics{asy_progetti/1111.pdf} \\
+\includegraphics{asy_progetti/211.pdf} \\
+\includegraphics{asy_progetti/112.pdf} \\
+\includegraphics{asy_progetti/22.pdf} \\
+\end{center}
+
+Aggiungiamo ora le combinanzioni rimanenti, ricordandoci che ora possiamo utilizzare anche tasselli di larghezza 3:
+\begin{itemize}
+    \item Il secondo ed il terzo progetto sono svolti nel secondo giorno (tassello azzurro). I rimanenti rettangoli possono essere tassellati in $f_3(1) \cdot f_3(1)= 1 \cdot 1 =1$ modo.
+    \begin{center}
+    \includegraphics{asy_progetti/121.pdf}
+    \end{center}
+    \item Il secondo ed il terzo progetto sono svolti nel primo giorno insieme al primo (tassello verde). Resta solo un rettangolo a destra, che può essere tassellato in $f_3(0) \cdot f_3(1)=1 \cdot 1 =1$ modo.
+    \begin{center}
+    \includegraphics{asy_progetti/31.pdf}
+    \end{center}
+    \item Il secondo ed il terzo progetto sono svolti nel secondo giorno insieme al quarto (tassello verde). Resta solo un rettangolo a sinistra, che può essere tassellato in $f_3(1) \cdot f_3(0)=1 \cdot 1 =1$ modo.
+    \begin{center}
+    \includegraphics{asy_progetti/13.pdf}
+    \end{center}
+
+\end{itemize}
+
+Abbiamo quindi che il valore cercato di $f_3(4)$ è pari a $4 + 1 + 1 + 1 = 7$.
+
+\createsection{\Cppsol}{Esempio di codice \texttt{C++11}}
+\Cppsol
+\colorbox{white}{\makebox[.99\textwidth][l]{\includegraphics[scale=1]{code_combinatoria.pdf}}}
+\end{solution}

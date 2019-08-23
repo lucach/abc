@@ -2,6 +2,12 @@
 \usepackage{afterpage}
 \usepackage{pifont,mdframed}
 \usepackage[bottom]{footmisc}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{asymptote}
+
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 
 \makeatletter
 \gdef\this@inputfilename{input}
@@ -112,3 +118,5 @@ Nel \textbf{secondo caso di esempio} ci sono cinque modi diversi per completare 
     \item uno il primo giorno, uno il secondo giorno, due il terzo giorno;
     \item due il primo giorno, uno il secondo giorno, uno il terzo giorno.
 \end{itemize}
+
+\include{soluzione_progetti}
