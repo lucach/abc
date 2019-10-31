@@ -3,6 +3,8 @@
 Questo repository contiene i task di programmazione tratti dalle
 gare ABC (Algoritmi Bergamo Contest).
 
+Se vuoi esercitarti con questi problemi, puoi consultare il testo in PDF e sottoporre soluzioni sulla [piattaforma di allenamento](https://training.olinfo.it/#/tasks/1?tag=abc).
+
 ## Struttura delle cartelle
 
 La struttura delle cartelle è `<anno>/<nome>` dove:
